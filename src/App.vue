@@ -64,15 +64,11 @@ export default {
       payload.done = !payload.done;
     },
     handleDeleteTodo(payload) {
-      const newTasks = this.tasks.filter(item => item.name != payload.name);
-      this.tasks = newTasks;
+      const indexTask = this.tasks.indexOf(payload);
+      this.tasks.splice(indexTask, 1)
     },
-    handleChangePage(payload) {
-      if (payload === 'TodoCreate') {
-        this.currentComponent = 'TodoCreate';
-      } else {
-        this.currentComponent = 'TodoList';
-      }
+    handleChangePage(componentName) {
+      this.currentComponent = componentName;
     },
   }
 }
