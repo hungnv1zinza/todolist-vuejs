@@ -1,13 +1,6 @@
 <template>
   <div class="h-100 w-full flex items-center justify-center bg-teal-lightest font-sans">
     <div class="bg-white rounded shadow p-6 m-4 w-full lg:w-1/2 lg:max-w-3/4">
-      <div class="mb-4">
-        <h1 class="text-grey-darkest">{{ title }}</h1>
-        <button @click="handleToggle"
-                class="flex-no-shrink p-2 border-2 rounded text-teal border-teal hover:text-white hover:bg-teal">
-          {{ button }}
-        </button>
-      </div>
       <component
           :tasks="tasksFiltered"
           :is="currentComponent"
@@ -15,6 +8,7 @@
           @doneTodo="handleDoneTodo"
           @deleteTodo="handleDeleteTodo"
           @search="handleSearch"
+          @changePage="handleChangePage"
       />
     </div>
   </div>
@@ -33,8 +27,6 @@ export default {
   data() {
     return {
       currentComponent: "TodoList",
-      title: "Todo List",
-      button: "Add New Todo",
       tasks: [
         {name: 'Task 1', done: false},
         {name: 'Task 2', done: false},
@@ -63,29 +55,23 @@ export default {
     },
     handleCreateTodo(payload) {
       this.tasks.push({
-        ...payload,
-        done: false
+        ...payload
       })
       this.currentComponent = 'TodoList'
-      this.title = "Todo List"
-      this.button = 'Add New Todo';
       this.search = '';
     },
     handleDoneTodo(payload) {
-      this.tasks.slice(payload, payload + 1)[0].done = true;
+      payload.done = !payload.done;
     },
     handleDeleteTodo(payload) {
-      this.tasks.splice(payload, 1)
+      const newTasks = this.tasks.filter(item => item.name != payload.name);
+      this.tasks = newTasks;
     },
-    handleToggle() {
-      if (this.currentComponent === 'TodoList') {
+    handleChangePage(payload) {
+      if (payload === 'TodoCreate') {
         this.currentComponent = 'TodoCreate';
-        this.title = "Todo Create"
-        this.button = 'Back';
       } else {
         this.currentComponent = 'TodoList';
-        this.title = "Todo List"
-        this.button = 'Add New Todo';
       }
     },
   }

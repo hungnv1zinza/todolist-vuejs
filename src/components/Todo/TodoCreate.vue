@@ -1,21 +1,26 @@
 <template>
-  <div>
-    <div class="flex mb-4 items-center">
+  <div class="mb-4">
+    <h1 class="text-grey-darkest">Todo Create</h1>
+    <button @click="$emit('changePage', 'TodoList')"
+            class="flex-no-shrink p-2 border-2 rounded text-teal border-teal hover:text-white hover:bg-teal">
+      Back
+    </button>
+  </div>
+  <div class="flex mb-4 items-center">
+    <div>
+      <div class="mb-5">
+        <label for="name" class="mb-3 block text-base">
+          Todo Name
+        </label>
+        <input v-model="formData.name" type="text" name="name" id="name" placeholder="Todo Name"
+               class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base outline-none focus:border-[#6A64F1] focus:shadow-md"/>
+      </div>
       <div>
-        <div class="mb-5">
-          <label for="name" class="mb-3 block text-base">
-            Todo Name
-          </label>
-          <input v-model="formData.name" type="text" name="name" id="name" placeholder="Todo Name"
-                 class="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-3 text-base outline-none focus:border-[#6A64F1] focus:shadow-md"/>
-        </div>
-        <div>
-          <button
-              @click="handleCreateTodo"
-              class="flex-no-shrink p-2 border-2 rounded text-red border-red hover:text-white hover:bg-red">
-            Submit
-          </button>
-        </div>
+        <button
+            @click="handleCreateTodo"
+            class="flex-no-shrink p-2 border-2 rounded text-red border-red hover:text-white hover:bg-red">
+          Submit
+        </button>
       </div>
     </div>
   </div>
@@ -30,7 +35,8 @@ export default {
   data() {
     return {
       formData: {
-        name: ''
+        name: '',
+        done: false
       }
     }
   },
